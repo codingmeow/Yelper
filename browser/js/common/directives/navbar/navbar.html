@@ -4,14 +4,14 @@
             <fullstack-logo></fullstack-logo>
         </div>
         <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-            </li>
+            <div class="btn-group" dropdown is-open="status.isopen">
+                <button type="button" class="btn btn-danger dropdown-toggle welcome" dropdown-toggle ng-disabled="disabled">
+                Restaurants <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li ng-repeat='restaurant in restaurants'><a href="#">{{ restaurant }}</a></li>
+                </ul>
+            </div>
         </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
-        </div>
     </div>
 </nav>
