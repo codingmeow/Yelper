@@ -21,35 +21,69 @@ Refer to the q documentation for why and how q.invoke is used.
 
 var mongoose = require('mongoose');
 var connectToDb = require('./server/db');
-var User = mongoose.model('User');
+var Restaurant = mongoose.model('Restaurant');
 var q = require('q');
 var chalk = require('chalk');
 
 var getCurrentUserData = function () {
-    return q.ninvoke(User, 'find', {});
+    return q.ninvoke(Restaurant, 'find', {});
 };
 
-var seedUsers = function () {
+var seedRestaurant = function () {
 
-    var users = [
+    var restaurant = [
         {
-            email: 'testing@fsa.com',
-            password: 'password'
+            name: 'test restaurant',
+            url: 'http://www.yelp.com/biz/dominique-ansel-bakery-new-york',
+            reviews: 'awsome bakery',
+            stars: 5,
+            result: 'TBD'
         },
         {
-            email: 'obama@gmail.com',
-            password: 'potus'
+            name: 'Bahn Mi Cart',
+            url: 'http://www.yelp.com/biz/banh-mi-cart-new-york',
+            reviews: 'bahn mi cart reviews',
+            stars: 5,
+            result: 'TBD'
+        },
+        {
+            name: 'Veronica\'s Kitchen',
+            url: 'http://www.yelp.com/biz/veronicas-kitchen-new-york',
+            reviews: 'Veronica\'s Kitchen reviews',
+            stars: 5,
+            result: 'TBD'
+        },
+        {
+            name: 'Open Kitchen',
+            url: 'http://www.yelp.com/biz/open-kitchen-new-york',
+            reviews: 'Open Kitchen reviews',
+            stars: 5,
+            result: 'TBD'
+        },
+        {
+            name: 'Sophie\'s Cuban Cuisine',
+            url: 'http://www.yelp.com/biz/sophies-cuban-cuisine-new-york-8',
+            reviews: 'Sophie\'s Cuban Cuisine',
+            stars: 5,
+            result: 'TBD'
+        },
+        {
+            name: 'Dig Inn',
+            url: 'http://www.yelp.com/biz/dig-inn-seasonal-market-new-york-5',
+            reviews: 'Dig Inn reviews',
+            stars: 5,
+            result: 'TBD'
         }
     ];
 
-    return q.invoke(User, 'create', users);
+    return q.invoke(Restaurant, 'create', restaurant);
 
 };
 
 connectToDb.then(function () {
-    getCurrentUserData().then(function (users) {
-        if (users.length === 0) {
-            return seedUsers();
+    getCurrentUserData().then(function (restaurant) {
+        if (restaurant.length === 0) {
+            return seedRestaurant();
         } else {
             console.log(chalk.magenta('Seems to already be user data, exiting!'));
             process.kill(0);
