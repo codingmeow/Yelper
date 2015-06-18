@@ -3,7 +3,7 @@
 var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
-    restaurantName: {
+    name: {
         type: String
     },
     url: {
@@ -17,7 +17,7 @@ var schema = new mongoose.Schema({
     },
     result: {
         type: String
-    },
+    }
 });
 
 mongoose.model('Restaurant', schema);
