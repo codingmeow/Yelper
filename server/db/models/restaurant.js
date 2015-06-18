@@ -7,7 +7,9 @@ var schema = new mongoose.Schema({
         type: String
     },
     url: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     },
     reviews: {
         type: String
