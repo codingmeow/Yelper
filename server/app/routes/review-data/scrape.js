@@ -6,8 +6,13 @@ request.get('http://www.yelp.com/biz/romano-pizza-weehawken', function (err, res
     var $ = cheerio.load(response.body);
     var reviews = $('.review');
     var reviewTexts = [];
+
     reviews.each(function (index) {
         reviewTexts.push($(this).text());
     });
-    console.log(reviewTexts);
+
+    var str = reviewTexts.join('');
+
+    var arr = str.replace(/\n/g, '').split('Compliment');
+    console.log(arr);
 });
