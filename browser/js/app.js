@@ -10,15 +10,6 @@ app.config(function ($urlRouterProvider, $locationProvider) {
 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, $state) {
-
-    // $stateChangeStart is an event fired
-    // whenever the process of changing a state begins.
-    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-
-        $state.go(toState.name, toParams);
-        event.preventDefault();
-
-
-    });
-
+    event.preventDefault();
+    $state.go('home');
 });

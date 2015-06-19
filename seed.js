@@ -62,14 +62,14 @@ var seedRestaurant = function () {
         },
         {
             name: 'Sophie\'s Cuban Cuisine',
-            url: 'http://www.yelp.com/biz/sophies-cuban-cuisine-new-york-8',
+            url: 'http://www.yelp.com/biz/sophies-cuban-cuisine-new-york',
             reviews: 'Sophie\'s Cuban Cuisine',
             stars: 5,
             result: 'TBD'
         },
         {
-            name: 'Dig Inn',
-            url: 'http://www.yelp.com/biz/dig-inn-seasonal-market-new-york-5',
+            name: 'Dig Inn Seasonal Market',
+            url: 'http://www.yelp.com/biz/dig-inn-seasonal-market-new-york',
             reviews: 'Dig Inn reviews',
             stars: 5,
             result: 'TBD'

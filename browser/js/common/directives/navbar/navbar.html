@@ -9,7 +9,7 @@
                 Restaurants <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat='restaurant in restaurants'><a href="#">{{ restaurant }}</a></li>
+                    <li ng-repeat='restaurant in restaurants' ng-click="getRestaurant(restaurant)" ng-selected="selectRestaurant"><a href="#">{{ restaurant }}</a></li>
                 </ul>
             </div>
         </ul>
