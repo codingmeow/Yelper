@@ -1,5 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
+var rest = mongoose.model('Restaurant');
 var AlchemyAPI = require('alchemy-api')
 var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
 var router = require('express').Router();
@@ -7,6 +8,7 @@ module.exports = router;
 
 // router.use('/tutorial', require('./tutorial'));
 // router.use('/members', require('./members'));
+router.use('/restaurants', require('./restaurants'));
 
 // function text(req, res, output) {
 // 	alchemy.text('url', demo_url, {}, function(response) {
@@ -16,17 +18,6 @@ module.exports = router;
 // }
 
 router.get('/', function(req, res, next){
-	// console.log('hit router', req.query.link)
-//Use mongoose if avail in database
-	// mongoose
-	// .model('Restaurant')
-	// .find({url:req.query.link})
-	// .exec()
-	// .then(function(rest){
-	// 	console.log(rest)
-	// 	res.send(rest);
-	// }, next);
-//use alchemy to scrape the website
 	alchemy.sentiment(req.query.link, {}, function(err, response){
 		if (err) throw err;
 		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
