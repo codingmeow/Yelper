@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, $state, RestFactory) {
 
     return {
         restrict: 'E',
@@ -11,11 +11,14 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                 'Veronica\'s Kitchen',
                 'Open Kitchen',
                 'Sophie\'s Cuban Cuisine',
-                'Dig Inn'
+                'Dig Inn Seasonal Market'
             ]
 
             scope.getRestaurant = function(rest){
-                RestFactory.getRest(rest).then(fuction(main){
+                // console.log('hit directive')
+                RestFactory
+                .getRest(rest)
+                .then(function(main){
                     scope.main = main;
                 })
             }

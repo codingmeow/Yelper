@@ -22,14 +22,14 @@ var schema = new mongoose.Schema({
     }
 });
 
-schema.virtual('link').get(function(){
-    var stop=this.url.length
-    for(var i=24; i<this.url.length; i++){
-        if(this.url[i] === '?' || this.url[i] ==='/'){
-            return stop = i;
-        }    
-    }
-    return this.url.slice(24,stop);
-})
+// schema.virtual('part_url').get(function(){
+//     var stop=this.url.length
+//     for(var i=24; i<this.url.length; i++){
+//         if(this.url[i] === '?' || this.url[i] ==='/'){
+//             return stop = i;
+//         }    
+//     }
+//     return this.url.slice(24,stop);
+// })
 
 mongoose.model('Restaurant', schema);
