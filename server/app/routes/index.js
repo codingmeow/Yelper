@@ -1,5 +1,8 @@
 'use strict';
 var mongoose = require('mongoose');
+var request = require('request');
+var cheerio = require('cheerio');
+var bluebird = require('bluebird');
 var AlchemyAPI = require('alchemy-api')
 var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
 var router = require('express').Router();
@@ -14,8 +17,56 @@ module.exports = router;
 // 		// author(req, res, output);
 // 	});
 // }
+		// function scraping(url, searchItem){
+		// 	    var reviewTexts = [];
+		// 	    var i=0
+		// 	return request.get(url, function (err, response) {
+		// 	    var $ = cheerio.load(response.body);
+		// 	    var reviews = $(searchItem);
+		// 	    reviews.each(function (index) {
+		// 	    	console.log($(this).text(), i++);
+		// 	        reviewTexts.push($(this).text().trim());
+		// 	    });
+		// 	    return reviewTexts;
+		// 	});
+		// }
+
+function scraping(url, searchItem) {
+   return new Promise(function(resolve, reject) {
+       var reviewTexts = [];
+       request.get(url, function(err, response) {
+         if (err) reject(err)
+         else {
+           var $ = cheerio.load(response.body);
+           var reviews = $(searchItem);
+           reviews.each(function(index) {
+             // console.log($(this).text());
+             reviewTexts.push($(this).text().trim());
+           });
+           resolve(reviewTexts);
+         }
+       });
+     })
+   }
+// bluebird.promisify(scraping);
+
+// alchemy.sentiment(req.query.link, {}, function(err, response){
+// 	if (err) throw err;
+// 	// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
+// 	var result = response;
+// 	console.log('hit router', result);
+// 	res.send(result);
+// })
 
 router.get('/', function(req, res, next){
+
+	scraping(req.query.link, '.ngram')
+	.then(function(review){
+		console.log('hit router  review', review)
+		res.status(200).send('success')
+	})
+	// .then(null, next);
+	// alchemy.keywords()
 	// console.log('hit router', req.query.link)
 //Use mongoose if avail in database
 	// mongoose
@@ -27,14 +78,10 @@ router.get('/', function(req, res, next){
 	// 	res.send(rest);
 	// }, next);
 //use alchemy to scrape the website
-	alchemy.sentiment(req.query.link, {}, function(err, response){
-		if (err) throw err;
-		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
-		var result = response;
-		console.log('hit router', result);
-		res.send(result);
-	})
 })
+
+//reviews: $('.review-content > p')
+
 
 // Make sure this is after all of
 // the registered routes!
