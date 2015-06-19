@@ -4,9 +4,9 @@ app.directive('rest-stats', function ($state, RestFactory){
 		scope: {
 			restaurant: '='
 		},
-		templateUrl: 'js/common/directives/rest-stats.html',
+		templateUrl: 'js/common/directives/rest-stats/rest-stats.html'//,
 		// link: function (scope) {
-		// 	return;
+		// 	scope.restaurant;
 		// }
 	};
 });
