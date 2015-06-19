@@ -13,7 +13,7 @@ app.factory('RestFactory', function($http){
 			var queryParams = {};
 			queryParams.link = fix(link);
 			console.log("hit factory, queryPamas.link", queryParams.link)
-			return $http.get('/', {params: queryParams})
+			return $http.get('/api/', {params: queryParams})
 			.then(function(res){
 				return res.data;
 			})
