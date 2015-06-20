@@ -1,6 +1,12 @@
 'use strict';
 var mongoose = require('mongoose');
+<<<<<<< HEAD
 var rest = mongoose.model('Restaurant');
+=======
+var request = require('request');
+var cheerio = require('cheerio');
+var bluebird = require('bluebird');
+>>>>>>> master
 var AlchemyAPI = require('alchemy-api')
 var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
 var router = require('express').Router();
@@ -16,8 +22,49 @@ router.use('/restaurants', require('./restaurants'));
 // 		// author(req, res, output);
 // 	});
 // }
+		// function scraping(url, searchItem){
+		// 	    var reviewTexts = [];
+		// 	    var i=0
+		// 	return request.get(url, function (err, response) {
+		// 	    var $ = cheerio.load(response.body);
+		// 	    var reviews = $(searchItem);
+		// 	    reviews.each(function (index) {
+		// 	    	console.log($(this).text(), i++);
+		// 	        reviewTexts.push($(this).text().trim());
+		// 	    });
+		// 	    return reviewTexts;
+		// 	});
+		// }
+
+function scraping(url, searchItem) {
+   return new Promise(function(resolve, reject) {
+       var reviewTexts = [];
+       request.get(url, function(err, response) {
+         if (err) reject(err)
+         else {
+           var $ = cheerio.load(response.body);
+           var reviews = $(searchItem);
+           reviews.each(function(index) {
+             // console.log($(this).text());
+             reviewTexts.push($(this).text().trim());
+           });
+           resolve(reviewTexts);
+         }
+       });
+     })
+   }
+// bluebird.promisify(scraping);
+
+// alchemy.sentiment(req.query.link, {}, function(err, response){
+// 	if (err) throw err;
+// 	// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
+// 	var result = response;
+// 	console.log('hit router', result);
+// 	res.send(result);
+// })
 
 router.get('/', function(req, res, next){
+<<<<<<< HEAD
 	alchemy.sentiment(req.query.link, {}, function(err, response){
 		if (err) throw err;
 		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
@@ -25,7 +72,31 @@ router.get('/', function(req, res, next){
 		console.log('hit router', result);
 		res.send(result);
 	})
+=======
+
+	scraping(req.query.link, '.ngram')
+	.then(function(review){
+		console.log('hit router  review', review)
+		res.status(200).send('success')
+	})
+	// .then(null, next);
+	// alchemy.keywords()
+	// console.log('hit router', req.query.link)
+//Use mongoose if avail in database
+	// mongoose
+	// .model('Restaurant')
+	// .find({url:req.query.link})
+	// .exec()
+	// .then(function(rest){
+	// 	console.log(rest)
+	// 	res.send(rest);
+	// }, next);
+//use alchemy to scrape the website
+>>>>>>> master
 })
+
+//reviews: $('.review-content > p')
+
 
 // Make sure this is after all of
 // the registered routes!
