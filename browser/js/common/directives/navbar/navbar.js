@@ -14,6 +14,10 @@ app.directive('navbar', function ($rootScope, $state, RestFactory) {
                 'Dig Inn Seasonal Market'
             ]
 
+            // scope.addRest = function (){
+            //     $state.go('addRestaurant');
+            // }
+
             scope.getRestaurant = function(rest){
                 // console.log('hit directive')
                 RestFactory

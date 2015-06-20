@@ -17,6 +17,12 @@ app.factory('RestFactory', function($http){
 			.then(function(res){
 				return res.data;
 			})
+		},
+		addRest: function (rest) {
+			return $http.post('/api/restaurants', rest)
+			.then(function (res) {
+				return res.data;
+			})
 		}
 	}
 })

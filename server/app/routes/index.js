@@ -1,8 +1,12 @@
 'use strict';
 var mongoose = require('mongoose');
+<<<<<<< HEAD
+var rest = mongoose.model('Restaurant');
+=======
 var request = require('request');
 var cheerio = require('cheerio');
 var bluebird = require('bluebird');
+>>>>>>> master
 var AlchemyAPI = require('alchemy-api')
 var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
 var router = require('express').Router();
@@ -10,6 +14,7 @@ module.exports = router;
 
 // router.use('/tutorial', require('./tutorial'));
 // router.use('/members', require('./members'));
+router.use('/restaurants', require('./restaurants'));
 
 // function text(req, res, output) {
 // 	alchemy.text('url', demo_url, {}, function(response) {
@@ -59,6 +64,15 @@ function scraping(url, searchItem) {
 // })
 
 router.get('/', function(req, res, next){
+<<<<<<< HEAD
+	alchemy.sentiment(req.query.link, {}, function(err, response){
+		if (err) throw err;
+		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
+		var result = response;
+		console.log('hit router', result);
+		res.send(result);
+	})
+=======
 
 	scraping(req.query.link, '.ngram')
 	.then(function(review){
@@ -78,6 +92,7 @@ router.get('/', function(req, res, next){
 	// 	res.send(rest);
 	// }, next);
 //use alchemy to scrape the website
+>>>>>>> master
 })
 
 //reviews: $('.review-content > p')
