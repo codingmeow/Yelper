@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var request = require('request');
 var cheerio = require('cheerio');
 var bluebird = require('bluebird');
+var rest = mongoose.model('Restaurant');
 var AlchemyAPI = require('alchemy-api')
 var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
 var router = require('express').Router();
@@ -10,6 +11,7 @@ module.exports = router;
 
 // router.use('/tutorial', require('./tutorial'));
 // router.use('/members', require('./members'));
+router.use('/restaurants', require('./restaurants'));
 
 // function text(req, res, output) {
 // 	alchemy.text('url', demo_url, {}, function(response) {
@@ -78,6 +80,15 @@ router.get('/', function(req, res, next){
 	// 	res.send(rest);
 	// }, next);
 //use alchemy to scrape the website
+
+	alchemy.sentiment(req.query.link, {}, function(err, response){
+		if (err) throw err;
+		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
+		var result = response;
+		console.log('hit router', result);
+		res.send(result);
+	})
+
 })
 
 //reviews: $('.review-content > p')
