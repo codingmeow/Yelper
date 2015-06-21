@@ -20,10 +20,10 @@ app.factory('RestFactory', function($http){
 		},
 		addRest: function (rest) {
 			console.log('hit factory')
-			// return $http.post('/api/restaurants', rest)
-			// .then(function (res) {
-			// 	return res.data;
-			// })
+			return $http.post('/api/', rest)
+			.then(function (res) {
+				return res.data;
+			})
 		}
 	}
 })

@@ -15,9 +15,3 @@ router.get('/:restname', function (req, res, next){
 	);
 });
 
-router.post('/', function (req, res, next){
-	var restaurant = new Restaurant(req.body);
-	restaurant.save(function (err){
-		res.status(200).send(restaurant);
-	});
-});

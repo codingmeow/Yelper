@@ -30,9 +30,7 @@ app.directive('navbar', function ($rootScope, $state, RestFactory) {
             scope.inputRest = function (rest){
                 console.log('hit directive', rest)
                 RestFactory.addRest(rest).then(function (newRest){
-                    $scope.newRest = {
-                        url: null
-                    }
+                    scope.newRest.url = null;
                 })
             }
 

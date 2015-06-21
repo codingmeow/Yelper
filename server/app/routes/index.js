@@ -1,9 +1,9 @@
 'use strict';
 var mongoose = require('mongoose');
+var Restaurant = mongoose.model('Restaurant');
 var request = require('request');
 var cheerio = require('cheerio');
 var bluebird = require('bluebird');
-var rest = mongoose.model('Restaurant');
 var AlchemyAPI = require('alchemy-api')
 var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
 var router = require('express').Router();
@@ -35,44 +35,77 @@ router.use('/restaurants', require('./restaurants'));
 
 function scraping(url, searchItem) {
    return new Promise(function(resolve, reject) {
-       var reviewTexts = [];
+       var info = [];
        request.get(url, function(err, response) {
          if (err) reject(err)
          else {
            var $ = cheerio.load(response.body);
-           var reviews = $(searchItem);
-           reviews.each(function(index) {
+           var infos = $(searchItem);
+           infos.each(function(index) {
              // console.log($(this).text());
-             reviewTexts.push($(this).text().trim());
-           });
-           resolve(reviewTexts);
-         }
-       });
-     })
-   }
-// bluebird.promisify(scraping);
+	            if(searchItem === '.star-img'){
+	            	// console.log('hit star-img')
+	             	info.push($(this).attr('title').slice(0,3));
+		        }else{
+			        info.push($(this).text().trim());
+		        }
+		      });
+           resolve(info);
+			}
+		});
+    })
+}
 
-// alchemy.sentiment(req.query.link, {}, function(err, response){
-// 	if (err) throw err;
-// 	// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
-// 	var result = response;
-// 	console.log('hit router', result);
-// 	res.send(result);
-// })
+// bluebird.promisify(scraping);
+// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
+
+function alchemyCalc(a) {
+	return new Promise (function(resolve, reject){
+		alchemy.sentiment(a, {}, function(err, response){
+			if (err) throw err;
+			temp.push(response.docSentiment);
+		})			
+		console.log('hit router alchemy', temp);
+
+	resolve(info);
+	})
+}
 
 router.get('/', function(req, res, next){
+	var newRest={}
+	// scraping(req.query.link, '.star-img')
+	// .then(function(info){
+	// 	// console.log('hit router', info)
+	// 	newRest.stars = info;
+	// })
+	// .catch(function (err) {
+	//   console.log(err);
+	// });
 
-	scraping(req.query.link, '.ngram')
+	// scraping(req.query.link, '.ngram')
+	// .then(function(info){
+	// 	newRest.ngram = info;
+	// }, next);
+
+	scraping(req.query.link, '.review-content > p')
 	.then(function(review){
-		console.log('hit router  review', review)
-		res.status(200).send('success')
+		return Promise.all(review.map(function(a){
+			return alchemyCalc(a)
+		}));
 	})
+	.then(function(result){
+		newRest.result = result;
+		console.log('hit router review', newRest)
+		return newRest;
+	})
+	.catch(function (err) {
+	  console.log(err);
+	});
 	// .then(null, next);
 	// alchemy.keywords()
 	// console.log('hit router', req.query.link)
 //Use mongoose if avail in database
-	// mongoose
-	// .model('Restaurant')
+	// Restaurant
 	// .find({url:req.query.link})
 	// .exec()
 	// .then(function(rest){
@@ -81,17 +114,30 @@ router.get('/', function(req, res, next){
 	// }, next);
 //use alchemy to scrape the website
 
-	alchemy.sentiment(req.query.link, {}, function(err, response){
-		if (err) throw err;
-		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
-		var result = response;
-		console.log('hit router', result);
-		res.send(result);
-	})
+	// alchemy.sentiment(req.query.link, {}, function(err, response){
+	// 	if (err) throw err;
+	// 	// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
+	// 	var result = response;
+	// 	console.log('hit router', result);
+	// 	res.send(result);
+	// })
 
 })
 
+router.post('/', function (req, res, next){
+	console.log('hit router', req.body)
+	Restaurant.create(req.body).then(function(created){
+		res.send(created);
+	},next);
+	// var restaurant = new Restaurant(req.body);
+	// restaurant.save(function (err){
+	// 	res.status(200).send(restaurant);
+	// });
+});
+
 //reviews: $('.review-content > p')
+//ngram: $('.ngram')
+//stars: $('.star-img').attr('title') //newRest.stars.push($(this).text().slice(0,3));
 
 
 // Make sure this is after all of
