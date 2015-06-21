@@ -19,10 +19,11 @@ app.factory('RestFactory', function($http){
 			})
 		},
 		addRest: function (rest) {
-			return $http.post('/api/restaurants', rest)
-			.then(function (res) {
-				return res.data;
-			})
+			console.log('hit factory')
+			// return $http.post('/api/restaurants', rest)
+			// .then(function (res) {
+			// 	return res.data;
+			// })
 		}
 	}
 })

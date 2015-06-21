@@ -4,7 +4,7 @@ app.directive('restSentiment', function ($state){
 		scope: {
 			restaurant: '='
 		},
-		templateUrl: 'js/common/directives/rest-sentiments/rest-sent.html'//,
+		templateUrl: 'js/common/directives/rest-sentiment/rest-sent.html'//,
 		// link: function (scope) {
 			
 		// }

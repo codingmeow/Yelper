@@ -1,4 +1,4 @@
-app.directive('rest-stats', function ($state, RestFactory){
+app.directive('restStats', function ($state, RestFactory){
 	return {
 		restrict: 'E',
 		scope: {
