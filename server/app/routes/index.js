@@ -60,19 +60,20 @@ function scraping(url, searchItem) {
 // res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
 
 function alchemyCalc(a) {
-	return new Promise (function(resolve, reject){
-		alchemy.sentiment(a, {}, function(err, response){
-			if (err) throw err;
-			temp.push(response.docSentiment);
-		})			
-		console.log('hit router alchemy', temp);
+	// return new Promise (function(resolve, reject){
+	alchemy.sentiment(a, {}, function(err, response){
+		if (err) throw err;
 
-	resolve(info);
-	})
+	console.log('hit router alchemy', response.docSentiment);		
+		return response.docSentiment;
+	})	
+	// resolve(info);
+	// })
 }
 
 router.get('/', function(req, res, next){
 	var newRest={}
+	newRest.result = [];
 	// scraping(req.query.link, '.star-img')
 	// .then(function(info){
 	// 	// console.log('hit router', info)
@@ -89,15 +90,18 @@ router.get('/', function(req, res, next){
 
 	scraping(req.query.link, '.review-content > p')
 	.then(function(review){
-		return Promise.all(review.map(function(a){
-			return alchemyCalc(a)
-		}));
-	})
-	.then(function(result){
-		newRest.result = result;
+		newRest.result.push(alchemyCalc(review))
+		// review.forEach(function(rev){
+		// 	newRest.result.push(alchemyCalc(rev));
+		// })
 		console.log('hit router review', newRest)
-		return newRest;
+		// return newRest.result;
 	})
+	// .then(function(result){
+	// 	newRest.result = result;
+	// 	console.log('hit router review', newRest)
+	// 	return newRest;
+	// })
 	.catch(function (err) {
 	  console.log(err);
 	});
