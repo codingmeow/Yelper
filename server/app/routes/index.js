@@ -72,6 +72,7 @@ function alchemyCalc(a) {
 }
 
 router.get('/', function(req, res, next){
+
 	var newRest={}
 	newRest.result = [];
 	scraping(req.query.link, '.star-img')
@@ -89,7 +90,16 @@ router.get('/', function(req, res, next){
 	})
 	.catch(function (err) {
 	  console.log(err);
-	});;
+	});
+
+	alchemy.sentiment(req.query.link, {}, function(err, response){
+		if (err) throw err;
+		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
+		var result = response;
+		console.log('hit router', result);
+		// res.send(result); //<-- for some reason, this line breaks the code
+	});
+
 
 	scraping(req.query.link, '.review-content > p')
 	.then(function(review){
@@ -128,6 +138,7 @@ router.get('/', function(req, res, next){
 	// 	res.send(rest);
 	// }, next);
 //use alchemy to scrape the website
+
 
 	// alchemy.sentiment(req.query.link, {}, function(err, response){
 	// 	if (err) throw err;
