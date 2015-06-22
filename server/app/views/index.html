@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <base href="/" />
-    <title>Yelper</title>
-    <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <head>
+        <base href="/" />
+        <title>Yelper</title>
+        <link rel="stylesheet" type="text/css" href="/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" type="text/css" href="/style.css" />
+        <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+        <meta charset="utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
     <script src="/lodash/index.js"></script>
     <script src="/angular/angular.js"></script>
     <script src="/angular-ui-router/release/angular-ui-router.js"></script>
@@ -13,7 +16,78 @@
     <script src="/main.js"></script>
 </head>
 <body ng-app="YelperApp">
-    <navbar></navbar>
-    <div ui-view></div>
+<navbar></navbar>
+<div ui-view></div>
+<script>
+
+var width = 960,
+    height = 500,
+    radius = Math.min(width, height) / 2 - 10;
+
+var data = d3.range(2).map(Math.random).sort(d3.descending);
+
+var color = d3.scale.category10();
+
+var arc = d3.svg.arc()
+    .outerRadius(radius);
+
+var pie = d3.layout.pie();
+
+var svg = d3.select("body").append("svg")
+    .datum(data)
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var arcs = svg.selectAll("g.arc")
+    .data(pie)
+  .enter().append("g")
+    .attr("class", "arc");
+
+arcs.append("path")
+    .attr("fill", function(d, i) { return color(i); })
+  .transition()
+    .ease("bounce")
+    .duration(2000)
+    .attrTween("d", tweenPie)
+  .transition()
+    .ease("elastic")
+    .delay(function(d, i) { return 2000 + i * 50; })
+    .duration(750)
+    .attrTween("d", tweenDonut);
+
+function tweenPie(b) {
+  b.innerRadius = 0;
+  var i = d3.interpolate({startAngle: 0, endAngle: 0}, b);
+  return function(t) { return arc(i(t)); };
+}
+
+function tweenDonut(b) {
+  b.innerRadius = radius * .6;
+  var i = d3.interpolate({innerRadius: 0}, b);
+  return function(t) { return arc(i(t)); };
+}
+
+</script>
 </body>
+<style>
+
+    body {
+      margin: 0;
+      background: #515151;
+      min-width: 960px;
+    }
+
+    rect {
+      fill: none;
+      pointer-events: all;
+    }
+
+    circle {
+      fill: none;
+      stroke-width: 2.5px;
+    }
+
+</style>
 </html>
