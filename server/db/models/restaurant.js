@@ -11,9 +11,6 @@ var schema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    reviews: {
-        type: String
-    },
     stars: {
         type: Number
     },

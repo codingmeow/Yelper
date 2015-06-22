@@ -35,42 +35,36 @@ var seedRestaurant = function () {
         {
             name: 'test restaurant',
             url: 'http://www.yelp.com/biz/dominique-ansel-bakery-new-york',
-            reviews: 'awsome bakery',
             stars: 5,
             result: 'TBD'
         },
         {
             name: 'Bahn Mi Cart',
             url: 'http://www.yelp.com/biz/banh-mi-cart-new-york',
-            reviews: 'bahn mi cart reviews',
             stars: 5,
             result: 'TBD'
         },
         {
             name: 'Veronica\'s Kitchen',
             url: 'http://www.yelp.com/biz/veronicas-kitchen-new-york',
-            reviews: 'Veronica\'s Kitchen reviews',
             stars: 5,
             result: 'TBD'
         },
         {
             name: 'Open Kitchen',
             url: 'http://www.yelp.com/biz/open-kitchen-new-york',
-            reviews: 'Open Kitchen reviews',
             stars: 5,
             result: 'TBD'
         },
         {
             name: 'Sophie\'s Cuban Cuisine',
             url: 'http://www.yelp.com/biz/sophies-cuban-cuisine-new-york',
-            reviews: 'Sophie\'s Cuban Cuisine',
             stars: 5,
             result: 'TBD'
         },
         {
             name: 'Dig Inn Seasonal Market',
             url: 'http://www.yelp.com/biz/dig-inn-seasonal-market-new-york',
-            reviews: 'Dig Inn reviews',
             stars: 5,
             result: 'TBD'
         }
