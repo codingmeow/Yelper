@@ -11,11 +11,14 @@ var schema = new mongoose.Schema({
         required: true,
         unique: true
     },
+    keyword: {
+        type: [String]
+    },
     stars: {
-        type: Number
+        type: [String]
     },
     result: {
-        type: String
+        type: [String]
     }
 });
 
