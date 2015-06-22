@@ -9,165 +9,128 @@ var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
 var router = require('express').Router();
 module.exports = router;
 
-// router.use('/tutorial', require('./tutorial'));
-// router.use('/members', require('./members'));
 router.use('/restaurants', require('./restaurants'));
 
-// function text(req, res, output) {
-// 	alchemy.text('url', demo_url, {}, function(response) {
-// 		output['text'] = { url:demo_url, response:JSON.stringify(response,null,4), results:response };
-// 		// author(req, res, output);
-// 	});
-// }
-		// function scraping(url, searchItem){
-		// 	    var reviewTexts = [];
-		// 	    var i=0
-		// 	return request.get(url, function (err, response) {
-		// 	    var $ = cheerio.load(response.body);
-		// 	    var reviews = $(searchItem);
-		// 	    reviews.each(function (index) {
-		// 	    	console.log($(this).text(), i++);
-		// 	        reviewTexts.push($(this).text().trim());
-		// 	    });
-		// 	    return reviewTexts;
-		// 	});
-		// }
-
 function scraping(url, searchItem) {
+		// console.log(typeof url, url);
    return new Promise(function(resolve, reject) {
-       var info = [];
-       request.get(url, function(err, response) {
-         if (err) reject(err)
-         else {
-           var $ = cheerio.load(response.body);
-           var infos = $(searchItem);
-           infos.each(function(index) {
-             // console.log($(this).text());
-	            if(searchItem === '.star-img'){
-	            	// console.log('hit star-img')
-	             	info.push($(this).attr('title').slice(0,3));
-		        }else{
-			        info.push($(this).text().trim());
-		        }
-		      });
-           resolve(info);
+     var info = [];
+     request.get(url, function(err, response) {
+       if (err) {
+       	console.log(err);
+       	reject(err);
+       }
+
+       else {
+
+         var $ = cheerio.load(response.body);
+         var infos = $(searchItem);
+         infos.each(function(index) {
+           // console.log($(this).text());
+            if(searchItem === '.star-img'){
+            	// console.log('hit star-img')
+             	info.push($(this).attr('title').slice(0,3));
+	        } else{
+		        info.push($(this).text().trim());
+	        }
+	      });
+        resolve(info);
 			}
 		});
-    })
+  })
 }
-
-// bluebird.promisify(scraping);
-// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
 
 function alchemyCalc(a) {
 	return new Promise (function(resolve, reject){
-	alchemy.sentiment(a, {}, function(err, response){
-		if (err) reject(err);
+		alchemy.sentiment(a, {}, function(err, response){
+			if (err) reject(err);
 
-	// console.log('hit router alchemy', response.docSentiment);		
-		// return response.docSentiment;
-		resolve(response.docSentiment);
-	})	
-	})
-}
+			resolve(response.docSentiment);
+		});
+	});
+};
 
-router.get('/', function(req, res, next){
+// router.get('/', function(req, res, next){
+
+
+// })
+
+function scrapeData (URL) {
 
 	var newRest={}
-	newRest.result = [];
-	scraping(req.query.link, '.star-img')
+
+	scraping(URL, '.star-img') //scraping stars
 	.then(function(info){
-		// console.log('hit router', info)
 		newRest.stars = info;
 	})
 	.catch(function (err) {
-	  console.log(err);
+	  console.log("THIS IS ERROR 1", err);
 	});
 
-	scraping(req.query.link, '.ngram')
+	scraping(URL, '.ngram') //scraping keywords
 	.then(function(info){
 		newRest.ngram = info;
 	})
 	.catch(function (err) {
-	  console.log(err);
+	  console.log("THIS IS ERROR 2", err);
 	});
 
-	alchemy.sentiment(req.query.link, {}, function(err, response){
-		if (err) throw err;
-		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
-		var result = response;
-		console.log('hit router', result);
-		// res.send(result); //<-- for some reason, this line breaks the code
+	scraping(URL, '.biz-page-title') //scraping restaurant name
+	.then(function(info){
+		newRest.name = info;
+	})
+	.catch(function (err) {
+	  console.log("THIS IS ERROR 3", err);
 	});
 
-
-	scraping(req.query.link, '.review-content > p')
+	scraping(URL, '.review-content > p') //scraping reviews
 	.then(function(review){
-		// newRest.result.push(alchemyCalc(review))
-		// review.forEach(function(rev){
 		return Promise.all(review.map(function (rev) {
+			// console.log('THIS IS REV', rev);
 			return alchemyCalc(rev)
-			// .then(function(ans){
-			// 	return newRest.result.push(ans);
-				
+
 			}))
 		.then(function(ans){
 			newRest.result = ans;
-			console.log('this is new rest', newRest)
+			// console.log('this is new rest', newRest)
 		})
-		// console.log('hit router review', newRest)
-		// return newRest.result;
 	})
-	// .then(function(result){
-	// 	// newRest.result = result;
-	// 	console.log('hit router review', result)
-	// 	return newRest;
-	// })
 	.catch(function (err) {
-	  console.log(err);
+	  console.log("THIS IS ERROR 4", err);
 	});
-	// .then(null, next);
-	// alchemy.keywords()
-	// console.log('hit router', req.query.link)
-//Use mongoose if avail in database
-	// Restaurant
-	// .find({url:req.query.link})
-	// .exec()
-	// .then(function(rest){
-	// 	console.log(rest)
-	// 	res.send(rest);
-	// }, next);
-//use alchemy to scrape the website
 
+	return newRest;
 
-	// alchemy.sentiment(req.query.link, {}, function(err, response){
-	// 	if (err) throw err;
-	// 	// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
-	// 	var result = response;
-	// 	console.log('hit router', result);
-	// 	res.send(result);
-	// })
-
-})
+}
 
 router.post('/', function (req, res, next){
-	console.log('hit router', req.body)
-	Restaurant.create(req.body).then(function(created){
-		res.send(created);
-	},next);
-	// var restaurant = new Restaurant(req.body);
-	// restaurant.save(function (err){
-	// 	res.status(200).send(restaurant);
-	// });
+
+	// console.log('hit router', req.body)
+
+	console.log(req.body);
+
+	scrapeData(req.body).then(function (newRest) {
+		
+		var newRestaurant = {
+			name: newRest.name,
+			url: req.body,
+			stars: newRest.stars,
+			result: newRest.result
+		}
+
+		// console.log(newRestaurant)
+
+		// console.log(req.body);
+		Restaurant.create(newRestaurant).then(function(created){
+			res.send(created);
+		}, next);
+
+	})
+
+
+
 });
 
-//reviews: $('.review-content > p')
-//ngram: $('.ngram')
-//stars: $('.star-img').attr('title') //newRest.stars.push($(this).text().slice(0,3));
-
-
-// Make sure this is after all of
-// the registered routes!
 router.use(function (req, res) {
     res.status(404).end();
 });
