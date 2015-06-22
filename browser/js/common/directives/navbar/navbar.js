@@ -7,28 +7,25 @@ app.directive('navbar', function ($rootScope, $state, RestFactory) {
         link: function (scope) {
 
             scope.restaurants = [];
-                // 'Bahn Mi Cart',
-                // 'Veronica\'s Kitchen',
-                // 'Open Kitchen',
-                // 'Sophie\'s Cuban Cuisine',
-                // 'Dig Inn Seasonal Market'
-            
 
-            // //.then(function (rest){
-            //     rest.name.forEach(function (name){
-            //         scope.restaurants.push(name);
-            //     })
-            // })
-
-
-            scope.getRestaurant = function(rest){
-                // console.log('hit directive')
-                RestFactory
-                .getRest(rest)
-                .then(function(main){
-                    scope.main = main;
+            scope.getAllRestNames = function () {
+                RestFactory.getAllRest().then(function (rests){
+                    scope.restaurants = rests.map(function (rest) {
+                        return rest.name;
+                    })
                 })
             }
+
+            scope.getAllRestNames();
+
+            // scope.getRestaurant = function(rest){
+            //     // console.log('hit directive')
+            //     RestFactory
+            //     .getRest(rest)
+            //     .then(function(main){
+            //         scope.main = main;
+            //     })
+            // }
 
             scope.inputRest = function (rest){
                 console.log('hit directive', rest)

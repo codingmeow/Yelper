@@ -117,7 +117,7 @@ router.post('/', function (req, res, next){
 		
 		var newRestaurant = {
 			name: newRest[0].join(),
-			url: req.body,
+			url: req.body.url,
 			keyword: newRest[1],
 			stars: parseInt(newRest[2]),
 			result: newRest[3]
@@ -131,8 +131,8 @@ router.post('/', function (req, res, next){
 	.then(function(created){
 			console.log('created!')
 			res.send(created);
-	})
-	.then(null, next);
+	}, next)
+	// .then(null, next);
 
 });
 

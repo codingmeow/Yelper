@@ -17,9 +17,7 @@ var schema = new mongoose.Schema({
     stars: {
         type: [String]
     },
-    result: {
-        type: [String]
-    }
+    result: [{}]
 });
 
 // schema.virtual('part_url').get(function(){
