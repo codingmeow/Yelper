@@ -81,7 +81,8 @@ function scrapeData (URL) {
 			// return alch;
 
 			// }))
-		return alchemyCalc(review[0]);
+		var reviews = review.join()
+		return alchemyCalc(reviews);
 
 		// .then(function(ans){
 		// 	newRest.result = ans;
@@ -119,7 +120,7 @@ router.post('/', function (req, res, next){
 			name: newRest[0].join(),
 			url: req.body,
 			keyword: newRest[1],
-			stars: parseInt(newRest[2]),
+			stars: newRest[2].map(parseFloat),
 			result: newRest[3]
 		}
 
