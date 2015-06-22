@@ -1,10 +1,6 @@
 'use strict';
 var mongoose = require('mongoose');
-<<<<<<< HEAD
 var Restaurant = mongoose.model('Restaurant');
-=======
-var rest = mongoose.model('Restaurant');
->>>>>>> master
 var request = require('request');
 var cheerio = require('cheerio');
 var bluebird = require('bluebird');
@@ -76,7 +72,7 @@ function alchemyCalc(a) {
 }
 
 router.get('/', function(req, res, next){
-<<<<<<< HEAD
+
 	var newRest={}
 	newRest.result = [];
 	// scraping(req.query.link, '.star-img')
@@ -92,7 +88,7 @@ router.get('/', function(req, res, next){
 	// .then(function(info){
 	// 	newRest.ngram = info;
 	// }, next);
-=======
+
 	alchemy.sentiment(req.query.link, {}, function(err, response){
 		if (err) throw err;
 		// res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
@@ -100,7 +96,7 @@ router.get('/', function(req, res, next){
 		console.log('hit router', result);
 		// res.send(result); //<-- for some reason, this line breaks the code
 	});
->>>>>>> master
+
 
 	scraping(req.query.link, '.review-content > p')
 	.then(function(review){
@@ -131,7 +127,7 @@ router.get('/', function(req, res, next){
 	// 	res.send(rest);
 	// }, next);
 //use alchemy to scrape the website
-<<<<<<< HEAD
+
 
 	// alchemy.sentiment(req.query.link, {}, function(err, response){
 	// 	if (err) throw err;
@@ -141,8 +137,6 @@ router.get('/', function(req, res, next){
 	// 	res.send(result);
 	// })
 
-=======
->>>>>>> master
 })
 
 router.post('/', function (req, res, next){
