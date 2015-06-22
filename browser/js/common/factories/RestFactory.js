@@ -18,6 +18,12 @@ app.factory('RestFactory', function($http){
 				return res.data;
 			})
 		},
+		getAllRest: function () {
+			return $http.get('/api/')
+			.then(function(response){
+				return response.data;
+			})
+		},
 		addRest: function (rest) {
 			console.log('hit factory')
 			return $http.post('/api/', rest)
