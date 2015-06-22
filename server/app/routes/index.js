@@ -60,34 +60,37 @@ function scraping(url, searchItem) {
 // res.text = {url: req.query.link, response:JSON.stringify(response, null, 4), results: response};
 
 function alchemyCalc(a) {
-	// return new Promise (function(resolve, reject){
+	return new Promise (function(resolve, reject){
 	alchemy.sentiment(a, {}, function(err, response){
-		if (err) throw err;
+		if (err) reject(err);
 
-	console.log('hit router alchemy', response.docSentiment);		
-		return response.docSentiment;
+	// console.log('hit router alchemy', response.docSentiment);		
+		// return response.docSentiment;
+		resolve(response.docSentiment);
 	})	
-	// resolve(info);
-	// })
+	})
 }
 
 router.get('/', function(req, res, next){
 
 	var newRest={}
 	newRest.result = [];
-	// scraping(req.query.link, '.star-img')
-	// .then(function(info){
-	// 	// console.log('hit router', info)
-	// 	newRest.stars = info;
-	// })
-	// .catch(function (err) {
-	//   console.log(err);
-	// });
+	scraping(req.query.link, '.star-img')
+	.then(function(info){
+		// console.log('hit router', info)
+		newRest.stars = info;
+	})
+	.catch(function (err) {
+	  console.log(err);
+	});
 
-	// scraping(req.query.link, '.ngram')
-	// .then(function(info){
-	// 	newRest.ngram = info;
-	// }, next);
+	scraping(req.query.link, '.ngram')
+	.then(function(info){
+		newRest.ngram = info;
+	})
+	.catch(function (err) {
+	  console.log(err);
+	});
 
 	alchemy.sentiment(req.query.link, {}, function(err, response){
 		if (err) throw err;
@@ -100,16 +103,24 @@ router.get('/', function(req, res, next){
 
 	scraping(req.query.link, '.review-content > p')
 	.then(function(review){
-		newRest.result.push(alchemyCalc(review))
+		// newRest.result.push(alchemyCalc(review))
 		// review.forEach(function(rev){
-		// 	newRest.result.push(alchemyCalc(rev));
-		// })
-		console.log('hit router review', newRest)
+		return Promise.all(review.map(function (rev) {
+			return alchemyCalc(rev)
+			// .then(function(ans){
+			// 	return newRest.result.push(ans);
+				
+			}))
+		.then(function(ans){
+			newRest.result = ans;
+			console.log('this is new rest', newRest)
+		})
+		// console.log('hit router review', newRest)
 		// return newRest.result;
 	})
 	// .then(function(result){
-	// 	newRest.result = result;
-	// 	console.log('hit router review', newRest)
+	// 	// newRest.result = result;
+	// 	console.log('hit router review', result)
 	// 	return newRest;
 	// })
 	.catch(function (err) {
