@@ -19,7 +19,8 @@ app.factory('RestFactory', function($http){
 			})
 		},
 		addRest: function (rest) {
-			return $http.post('/api/restaurants', rest)
+			console.log('hit factory')
+			return $http.post('/api/', rest)
 			.then(function (res) {
 				return res.data;
 			})

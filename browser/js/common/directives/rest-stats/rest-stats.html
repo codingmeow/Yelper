@@ -1,4 +1,18 @@
 <div class='container' id='rest-stats'>
-	<h3 ng-model='restaurant.name'>{{ restaurant.name }}</h3>
-	<rating ng-model='restaurant.rating' max='5' readonly='true'></rating>
+	<div class='row'>
+		<h3 ng-model='restaurant.name'>RESTAURANT NAME has a {{ restaurant.name }} <rating ng-model='restaurant.rating' max='5' readonly='true'></rating> rating</h3>
+	</div>
+
+	<div class='row'>
+		<h3>
+			Diners generally have a POSITIVE/NEGATIVE view of RESTAURANT NAME
+		</h3>
+	</div>
+
+	<div class='row'>
+		<h3>
+			The keywords generally associated with RESTAURANT NAME are: KEYWORDS
+		</h3>
+	</div>
+
 </div>
