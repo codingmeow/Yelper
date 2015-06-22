@@ -2,7 +2,8 @@ module.exports = {
   "DATABASE_URI": "mongodb://localhost:27017/yelper",
   "SESSION_SECRET": "Optimus Prime is my real dad",
   "ALCHEMY": {
-    "apiKey": "80519a32da8d918f0e517dcdcc91f9b247db03be"
+    // "apiKey": "80519a32da8d918f0e517dcdcc91f9b247db03be"
+    "apiKey": "cfa7fa71418107272aff39fe4336fe88fa822d8c"
   },
   "TWITTER": {
     "consumerKey": "INSERT_TWITTER_CONSUMER_KEY_HERE",

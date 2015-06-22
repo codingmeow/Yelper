@@ -5,7 +5,8 @@ var request = require('request');
 var cheerio = require('cheerio');
 var bluebird = require('bluebird');
 var AlchemyAPI = require('alchemy-api')
-var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
+// var alchemy = new AlchemyAPI("80519a32da8d918f0e517dcdcc91f9b247db03be");
+var alchemy = new AlchemyAPI("cfa7fa71418107272aff39fe4336fe88fa822d8c");
 var router = require('express').Router();
 module.exports = router;
 
@@ -42,7 +43,6 @@ function alchemyCalc(a) {
 	return new Promise (function(resolve, reject){
 		alchemy.sentiment(a, {}, function(err, response){
 			if (err) reject(err);
-
 			resolve(response.docSentiment);
 		});
 	});
@@ -73,24 +73,25 @@ function scrapeData (URL) {
 	// 	return info;
 	// })
 	
-	var p4 = scraping(URL, '.review-content > p') //scraping reviews
-	.then(function(review){
-		// return Promise.all(review.map(function (rev) {
-			// var alch = alchemyCalc(rev);
-			// console.log('THIS IS REV + ALCH', rev, alch);
-			// return alch;
+	// var p4 = scraping(URL, '.review-content > p') //scraping reviews
+	// .then(function(review){
+	// 	return Promise.all(review.map(function (rev) {
+	// 		var alch = alchemyCalc(rev);
+	// 		console.log('THIS IS ALCH', alch);
+	// 		return alch;
 
-			// }))
-		return alchemyCalc(review[0]);
+	// 		}))
+	// 	// var reviews = review.join()
+	// 	// return alchemyCalc(reviews);
 
-		// .then(function(ans){
-		// 	newRest.result = ans;
-		// 	// console.log('this is new rest', newRest)
-		// })
-	})
+	// 	// .then(function(ans){
+	// 	// 	newRest.result = ans;
+	// 	// 	// console.log('this is new rest', newRest)
+	// 	// })
+	// })
 	// console.log('this is newRest', newRest)
 	// return newRest;
-	return Promise.all([p1,p2,p3,p4]);
+	return Promise.all([p1,p2,p3]);
 }
 
 router.get('/', function(req, res, next){
@@ -101,17 +102,14 @@ router.get('/', function(req, res, next){
 	})
 	.then(null,function (err) {
 	  console.log("THIS IS ERROR ROOT", err);
-	});
+	}, next);
 
 })
 
 router.post('/', function (req, res, next){
+	// console.log(req.body.url)
 
-	// console.log('hit router', req.body)
-
-	// console.log(req.body);
-
-	scrapeData(req.body)
+	scrapeData(req.body.url)
 	.then(function (newRest) {
 		console.log('this is new rest', newRest)
 		
@@ -119,7 +117,7 @@ router.post('/', function (req, res, next){
 			name: newRest[0].join(),
 			url: req.body.url,
 			keyword: newRest[1],
-			stars: parseInt(newRest[2]),
+			stars: newRest[2].map(parseFloat),
 			result: newRest[3]
 		}
 
@@ -129,10 +127,10 @@ router.post('/', function (req, res, next){
 		return Restaurant.create(newRestaurant)
 	})
 	.then(function(created){
-			console.log('created!')
+			console.log('created!', created)
 			res.send(created);
 	}, next)
-	// .then(null, next);
+	.then(null, next);
 
 });
 
