@@ -15,7 +15,7 @@ var schema = new mongoose.Schema({
         type: [String]
     },
     stars: {
-        type: [String]
+        type: [Number]
     },
     result: [{}]
 });
