@@ -85,7 +85,7 @@ function scrapeData (URL) {
 
 	scraping(URL, '.review-content > p') //scraping reviews
 	.then(function(review){
-		return var p4 = Promise.all(review.map(function (rev) {
+		var p4 = Promise.all(review.map(function (rev) {
 			// console.log('THIS IS REV', rev);
 			return alchemyCalc(rev)
 
