@@ -33,40 +33,53 @@ var seedRestaurant = function () {
 
     var restaurant = [
         {
-            name: 'test restaurant',
+            name: 'Dominique Ansel Bakery',
             url: 'http://www.yelp.com/biz/dominique-ansel-bakery-new-york',
-            stars: 5,
+            keyword: [ 'Cronut', 'DKA', 'croissant' ],
+            stars: [ 4.0, 4.0, 3.0, 3.0, 3.0, 2.0, 4.0, 4.0, 5.0, 5.0, 5.0, 5.0, 3.0, 4.0, 4.0, 5.0, 4.0, 4.0, 5.0, 2.0, 4.0, 5.0, 5.0, 5.0, 4.0, 3.0, 3.0, 5.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 5.0, 3.0, 2.0, 4.0, 5.0, 4.0, 4.0, 1.0, 4.0, 3.0, 4.0, 4.5, 4.0, 4.0],
             result: 'TBD'
         },
         {
             name: 'Bahn Mi Cart',
-            url: 'http://www.yelp.com/biz/banh-mi-cart-new-york',
-            stars: 5,
+            url: 'http://www.yelp.com/biz/banh-mi-cart-new-yor',
+            keyword: [ 'financial district', 'Chinatown', 'FiDi' ],
+            stars:   [ 3.5, 4.0, 3.0, 4.0, 3.0, 4.0, 3.0, 3.0, 4.0, 4.0, 5.0, 2.0, 3.0, 5.0, 5.0, 5.0, 5.0, 4.0, 4.0, 4.0, 4.0, 3.0, 3.0, 4.0, 3.0, 4.0, 4.0, 3.0, 4.0, 4.0, 3.0, 4.0, 3.0, 4.0, 4.0, 3.0, 3.0, 4.0, 1.0, 4.0, 4.0, 3.0, 4.0, 4.0, 4.0, 4.0, 3.5, 3.5, 4.0],
             result: 'TBD'
         },
         {
             name: 'Veronica\'s Kitchen',
             url: 'http://www.yelp.com/biz/veronicas-kitchen-new-york',
-            stars: 5,
+            keyword: [ 'Stew Chicken', 'Ox Tail', 'Boneless beef rib' ],
+            stars: [ 4.0, 5.0, 4.0, 4.0, 4.0, 4.0, 5.0, 4.0, 4.0, 3.0, 4.0, 3.0, 4.0, 4.0, 4.0, 1.0, 4.0, 4.0, 2.0, 5.0, 2.0, 4.0, 4.0, 4.0, 4.0, 3.0, 4.0, 4.0, 4.0, 4.0, 4.0, 1.0, 4.0, 4.0, 4.0, 3.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 5.0, 4.0, 4.0, 3.5],
             result: 'TBD'
         },
         {
             name: 'Open Kitchen',
             url: 'http://www.yelp.com/biz/open-kitchen-new-york',
-            stars: 5,
+            keyword: [ 'carving station', 'salad bar', 'stir fry' ],
+            stars: [ 3.0, 5.0, 3.0, 3.0, 5.0, 3.0, 5.0, 4.0, 3.0, 3.0, 1.0, 5.0, 4.0, 3.0, 3.0, 4.0, 2.0, 2.0, 4.0, 5.0, 4.0, 3.0, 4.0, 2.0, 4.0, 3.0, 1.0, 4.0, 4.0, 4.0, 5.0, 3.0, 3.0, 3.0, 4.0, 4.0, 3.0, 5.0, 3.0, 3.0, 3.0, 4.0, 3.5, 4.5],
             result: 'TBD'
         },
         {
             name: 'Sophie\'s Cuban Cuisine',
-            url: 'http://www.yelp.com/biz/sophies-cuban-cuisine-new-york',
-            stars: 5,
+            url: 'http://www.yelp.com/biz/sophies-cuban-cuisine-new-york-8',
+            keyword: [ 'green sauce', 'Financial District', 'pernil' ],
+            stars: [ 4.0, 5.0, 4.0, 5.0, 4.0, 1.0, 4.0, 4.0, 5.0, 5.0, 3.0, 5.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 3.0, 5.0, 1.0, 5.0, 1.0, 4.0, 2.0, 4.0, 3.0, 4.0, 4.0, 4.0, 1.0, 4.0, 4.0, 4.0, 5.0, 2.0, 2.0, 5.0, 3.5, 4.0, 4.0],
             result: 'TBD'
         },
         {
             name: 'Dig Inn Seasonal Market',
             url: 'http://www.yelp.com/biz/dig-inn-seasonal-market-new-york',
-            stars: 5,
+            keyword: [ 'lemon chicken', 'sweet potatoes', 'braised beef' ],
+            stars: [ 4.0, 5.0, 4.0, 3.0, 4.0, 4.0, 5.0, 5.0, 4.0, 4.0, 2.0, 3.0, 5.0, 4.0, 5.0, 4.0, 5.0, 5.0, 1.0, 1.0, 4.0, 4.0, 2.0, 5.0, 4.0, 1.0, 4.0, 5.0, 3.0, 4.0, 5.0, 4.0, 4.0, 5.0, 5.0, 5.0, 5.0, 4.0, 3.0, 4.0, 4.0, 3.0, 4.0, 4.0, 4.0, 5.0, 4.0, 2.0, 4.0, 3.0, 4.0],
             result: 'TBD'
+        },
+        {
+            name: 'Nan Xiang Dumpling House',
+            url: 'http://www.yelp.com/biz/nan-xiang-dumpling-house-flushing',
+            keyword: [ 'scallion pancake', 'xiao long bao', 'Joe' ],
+            stars: [ 4.0, 5.0, 4.0, 4.0, 4.0, 4.0, 4.0, 3.0, 5.0, 4.0, 2.0, 4.0, 5.0, 4.0, 4.0, 4.0, 4.0, 3.0, 4.0, 4.0, 4.0, 3.0, 5.0, 4.0, 4.0, 5.0, 4.0, 5.0, 3.0, 4.0, 5.0, 5.0, 4.0, 5.0, 4.0, 4.0, 2.0, 4.0, 5.0, 5.0, 2.0, 5.0, 4.0, 3.5, 4.0],
+            result: [ { mixed: '1', score: '0.471858', type: 'positive' }, { mixed: '1', score: '-0.417377', type: 'negative' }, { mixed: '1', score: '0.63999', type: 'positive' }, { mixed: '1', score: '-0.20352', type: 'negative' }, { mixed: '1', score: '-0.140678', type: 'negative' }, { mixed: '1', score: '0.107166', type: 'positive' }, { mixed: '1', score: '-0.181921', type: 'negative' }, { mixed: '1', score: '0.436852', type: 'positive' }, { mixed: '1', score: '0.368385', type: 'positive' }, { mixed: '1', score: '-0.17827', type: 'negative' }, { mixed: '1', score: '0.32037', type: 'positive' }, { score: '0.876799', type: 'positive' }, { mixed: '1', score: '0.0709756', type: 'positive' }, { mixed: '1', score: '0.24764', type: 'positive' }, { mixed: '1', score: '0.451939', type: 'positive' }, { mixed: '1', score: '0.416288', type: 'positive' }, { mixed: '1', score: '0.0171464', type: 'positive' }, { mixed: '1', score: '0.17853', type: 'positive' }, { mixed: '1', score: '0.609906', type: 'positive' }, { mixed: '1', score: '-0.059949', type: 'negative' }, { mixed: '1', score: '-0.173958', type: 'negative' }, { mixed: '1', score: '0.0668999', type: 'positive' }, { mixed: '1', score: '0.31917', type: 'positive' }, { mixed: '1', score: '0.201726', type: 'positive' }, { score: '0.488017', type: 'positive' }, { mixed: '1', score: '0.279042', type: 'positive' }, { mixed: '1', score: '-0.0352682', type: 'negative' }, { mixed: '1', score: '-0.283221', type: 'negative' }, { mixed: '1', score: '0.445347', type: 'positive' }, { mixed: '1', score: '-0.0508703', type: 'negative' }, { mixed: '1', score: '0.29816', type: 'positive' }, { mixed: '1', score: '0.550381', type: 'positive' }, { mixed: '1', score: '-0.301316', type: 'negative' }, { mixed: '1', score: '-0.323244', type: 'negative' }, { mixed: '1', score: '-0.31562', type: 'negative' }, { mixed: '1', score: '-0.393946', type: 'negative' }, { mixed: '1', score: '0.482891', type: 'positive' }, { mixed: '1', score: '0.153394', type: 'positive' }, { mixed: '1', score: '0.181825', type: 'positive' }, { mixed: '1', score: '0.590995', type: 'positive' }]
         }
     ];
 
