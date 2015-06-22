@@ -17,7 +17,7 @@ function scraping(url, searchItem) {
      var info = [];
      request.get(url, function(err, response) {
        if (err) {
-       	console.log(err);
+       	console.log('this is scraping utility err', err);
        	reject(err);
        }
 
@@ -50,86 +50,106 @@ function alchemyCalc(a) {
 	});
 };
 
-// router.get('/', function(req, res, next){
-
-
-// })
-
 function scrapeData (URL) {
-
 	var newRest={}
+	// var promiseArray = [];
 
-	scraping(URL, '.star-img') //scraping stars
-	.then(function(info){
-		newRest.stars = info;
-	})
-	.catch(function (err) {
-	  console.log("THIS IS ERROR 1", err);
-	});
+	var p1 = scraping(URL, '.biz-page-title') //scraping restaurant name
+	// .then(function(info){
+	// 	newRest.name = info;
+	// 			return info;
 
-	scraping(URL, '.ngram') //scraping keywords
-	.then(function(info){
-		newRest.ngram = info;
-	})
-	.catch(function (err) {
-	  console.log("THIS IS ERROR 2", err);
-	});
+	// })
+	// .catch(function (err) {
+	//   console.log("THIS IS ERROR 3", err);
+	// });
 
-	scraping(URL, '.biz-page-title') //scraping restaurant name
-	.then(function(info){
-		newRest.name = info;
-	})
-	.catch(function (err) {
-	  console.log("THIS IS ERROR 3", err);
-	});
+	var p2 = scraping(URL, '.ngram') //scraping keywords
+	// .then(function(info){
+	// 	newRest.ngram = info;
+	// 			return info;
+
+	// })
+	// .catch(function (err) {
+	//   console.log("THIS IS ERROR 2", err);
+	// });
+
+	var p3 = scraping(URL, '.star-img') //scraping stars
+	// .then(function(info){
+	// 	newRest.stars = info;
+	// 	return info;
+	// })
+	// .catch(function (err) {
+	//   console.log("THIS IS ERROR 1", err);
+	// });
 
 	scraping(URL, '.review-content > p') //scraping reviews
 	.then(function(review){
-		return Promise.all(review.map(function (rev) {
+		return var p4 = Promise.all(review.map(function (rev) {
 			// console.log('THIS IS REV', rev);
 			return alchemyCalc(rev)
 
 			}))
-		.then(function(ans){
-			newRest.result = ans;
-			// console.log('this is new rest', newRest)
-		})
+
+		// .then(function(ans){
+		// 	newRest.result = ans;
+		// 	// console.log('this is new rest', newRest)
+		// })
+	})
+	// .catch(function (err) {
+	//   console.log("THIS IS ERROR 4", err);
+	// });
+	// console.log('this is newRest', newRest)
+	// return newRest;
+	return Promise.all([p1,p2,p3,p4])
+}
+
+router.get('/', function(req, res, next){
+	Restaurant.find({})
+	.exec()
+	.then(function(rest){
+		res.send(rest);
 	})
 	.catch(function (err) {
-	  console.log("THIS IS ERROR 4", err);
+	  console.log("THIS IS ERROR ROOT", err);
 	});
 
-	return newRest;
-
-}
+})
 
 router.post('/', function (req, res, next){
 
 	// console.log('hit router', req.body)
 
-	console.log(req.body);
+	// console.log(req.body);
 
 	scrapeData(req.body).then(function (newRest) {
+		console.log('this is new rest', newRest)
 		
 		var newRestaurant = {
-			name: newRest.name,
+			name: newRest[0].stringify(),
 			url: req.body,
-			stars: newRest.stars,
-			result: newRest.result
+			keyword: newRest[1],
+			stars: Number(newRest[2]),
+			result: newRest[3]
 		}
 
 		// console.log(newRestaurant)
 
 		// console.log(req.body);
 		Restaurant.create(newRestaurant).then(function(created){
+			console.log('created!')
 			res.send(created);
 		}, next);
 
 	})
-
-
+	.catch(function (err) {
+	  console.log("THIS IS ERROR 4", err);
+	});
 
 });
+
+
+
 
 router.use(function (req, res) {
     res.status(404).end();
