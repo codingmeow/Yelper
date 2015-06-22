@@ -2,7 +2,9 @@ app.directive('navbar', function ($rootScope, $state, RestFactory) {
 
     return {
         restrict: 'E',
-        scope: {},
+        scope: { 
+            restaurant: '=' 
+        },
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function (scope) {
 
@@ -16,7 +18,17 @@ app.directive('navbar', function ($rootScope, $state, RestFactory) {
                 })
             }
 
+            scope.getRestaurantByURL = function (link) {
+                scope.restaurants.forEach(function (thisRest){
+                    if (thisRest.url ===  link){
+                    console.log('THIS IS LINK', link);
+                    console.log('THIS IS THISREST',thisRest);
+                        scope.restaurant = thisRest;
+                    }
+                })
+            }
             scope.getAllRestNames();
+
 
             // scope.getRestaurant = function(rest){
             //     // console.log('hit directive')
