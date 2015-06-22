@@ -6,17 +6,20 @@ app.directive('navbar', function ($rootScope, $state, RestFactory) {
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function (scope) {
 
-            scope.restaurants = [
-                'Bahn Mi Cart',
-                'Veronica\'s Kitchen',
-                'Open Kitchen',
-                'Sophie\'s Cuban Cuisine',
-                'Dig Inn Seasonal Market'
-            ]
+            scope.restaurants = [];
+                // 'Bahn Mi Cart',
+                // 'Veronica\'s Kitchen',
+                // 'Open Kitchen',
+                // 'Sophie\'s Cuban Cuisine',
+                // 'Dig Inn Seasonal Market'
+            
 
-            // scope.addRest = function (){
-            //     $state.go('addRestaurant');
-            // }
+            // //.then(function (rest){
+            //     rest.name.forEach(function (name){
+            //         scope.restaurants.push(name);
+            //     })
+            // })
+
 
             scope.getRestaurant = function(rest){
                 // console.log('hit directive')
