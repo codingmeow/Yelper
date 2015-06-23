@@ -1,7 +1,31 @@
 app.factory('D3Factory', function ($http) {
 	var svg;
+	var count=1
+	// function calcMe(arr){
+	// 	var obj={}
+	// 	arr.forEach(function(a){
+	// 		if(a.score > 0){
+	// 			obj.pos++
+	// 		}else{
+	// 			obj.neg++
+	// 		}
+	// 	})
+	// 	return obj;
+	// }
+
 	return {
-		loadD3: function () {
+		loadD3: function (arr) {
+			// function calcSent(arr){
+			// 	if(count%2 === 0){
+			// 		return
+
+			// 		}
+			// 	}else{
+			// 		return .3
+			// 	}
+
+			// }
+			console.log(Math.random)
 			var width = 960,
 			    height = 500,
 			    radius = Math.min(width, height) / 2 - 10;
