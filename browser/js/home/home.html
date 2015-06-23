@@ -9,7 +9,7 @@
                 Restaurants <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                    <li ng-repeat='restaurant in restaurants' ng-click="getRestaurantByName(restaurant.name)" ng-selected="selectRestaurant"><a href="#">{{ restaurant.name }}</a></li>
+                    <li ng-repeat='restaurant in restaurants' ng-click="getRestaurantByName(restaurant.name)" ng-selected="selectRestaurant"><a href="#" class='rest-list'>{{ restaurant.name }}</a></li>
                 </ul>
             </div>
             <div class="navbar-right col-md-6 input-group welcome" id='url-bar'>
@@ -22,24 +22,28 @@
     </div>
 </nav>
 
-<div ng-show="showing"> Please select Restaurant</div>
+<div id='placeholder' ng-show="showing">
+Please <span>select</span> a restaurant in our database or <span>paste</span> restaurant URL to begin.
+</div>
 
 <section id="home" ng-hide="showing">
     <div class='container' id='rest-stats' >
 	<div class='row'>
-		<h3 ng-model='restaurant.name'>{{ selectedRest.name }} has a <rating ng-model='rating' max='5' readonly='true'>{{rating}}</rating> rating</h3>
+		<h2 ng-model='restaurant.name'><span>
+            <a href={{selectedRest.url}}>{{ selectedRest.name }}</a>
+        </span> has a <rating ng-model='rating' max='5' readonly='true'>{{rating}}</rating> rating</h2>
 	</div>
 
 	<div class='row'>
-		<h3>
-			Diners generally have a {{negpos}} view of {{ selectedRest.name }}
-		</h3>
+		<h2>
+			Diners generally have a <span>{{negpos}}</span> view of <span>{{ selectedRest.name }}</span>
+		</h2>
 	</div>
 
 	<div class='row'>
-		<h3>
-			The keywords generally associated with {{ selectedRest.name }} are: <span> {{ selectedRest.keyword[0] }}, {{ selectedRest.keyword[1] }}, and {{ selectedRest.keyword[2] }}</span>
-		</h3>
+		<h2>
+			The keywords generally associated with <span>{{ selectedRest.name }}</span> are: <span> {{ selectedRest.keyword[0] }}, {{ selectedRest.keyword[1] }}, and {{ selectedRest.keyword[2] }}</span>
+		</h2>
 	</div>
 
 </div>
