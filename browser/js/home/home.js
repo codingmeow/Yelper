@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('MainController', function ($scope, RestFactory){
+app.controller('MainController', function ($scope, RestFactory, D3Factory){
 	$scope.showing = true;
 	$scope.restaurants = [];
     $scope.selectRestaurant = null;
@@ -22,6 +22,8 @@ app.controller('MainController', function ($scope, RestFactory){
 
     $scope.getRestaurantByName = function (name) {
         // console.log('this is name', name)
+        D3Factory.removeD3();
+        D3Factory.loadD3();
         $scope.showing = false;
 
         $scope.restaurants.forEach(function(rest){
