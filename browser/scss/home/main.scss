@@ -53,6 +53,22 @@
     }
 }
 
+body {
+  text-align: center;
+  margin: 0;
+  background: #6d6d6d;
+  min-width: 960px;
+}
+
+rect {
+  fill: none;
+  pointer-events: all;
+}
+
+circle {
+  fill: none;
+  stroke-width: 2.5px;
+}
 
 #home {
 	font-family: 'Raleway', sans-serif;
