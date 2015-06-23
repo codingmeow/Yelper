@@ -11,16 +11,6 @@ app.controller('MainController', function ($scope, RestFactory){
 	$scope.restaurants = [];
     $scope.selectRestaurant = null;
 
-
-	// var starArr = $scope.selectedRest.stars
-
-
-	// $scope.averageRating = function (starArr) {
-	// 	return eval(starArr.join('+'))/starArr.length;
-	// }
-	// console.log($scope.averageRating());
-
-
     $scope.getAllRestNames = function () {
         RestFactory.getAllRest().then(function (rests){
             $scope.restaurants = rests.map(function (rest) {
@@ -33,49 +23,31 @@ app.controller('MainController', function ($scope, RestFactory){
     $scope.getRestaurantByName = function (name) {
         // console.log('this is name', name)
         $scope.showing = false;
+
         $scope.restaurants.forEach(function(rest){
             if(name === rest.name){
                 $scope.selectRestaurant = true;
                 $scope.selectedRest = rest;
-                // console.log($scope.selectedRest)
+                $scope.rating = Math.round(averagie(rest.stars));
             }
         })
     }
 
-    // $scope.getRestaurant('Dominique Ansel Bakery');
-
-
-    // $scope.getRestaurant = function(rest){
-    //     // console.log('hit directive')
-    //     RestFactory
-    //     .getRest(rest)
-    //     .then(function(main){
-    //         $scope.main = main;
-    //     })
-    // }
-
     $scope.inputRest = function (rest){
         console.log('hit directive', rest)
+        $scope.showing = false;
         RestFactory.addRest(rest).then(function (newRest){
             $scope.newRest.url = null;
+            $scope.selectedRest = newRest;
         })
     }
 
-	// 
-	// console.log($scope.averageRating);
-	// $scope.getAllRestaurants = function () {
-	// 	RestFactory.getAllRest().then(function (rests){
-	// 		$scope.restaurants = rests;
-	// 	});
-	// };
-	// $scope.getAllRestaurants();
-
-		// $scope.showRestByName = function (name) {
-		// 	RestFactory.getRestByName(name).then(function (restaurant){
-		// 		$scope.restaurant = restaurant;
-		// 	});
-		// };
-
-		// $scope.showRestByName();
+    function averagie(arr){
+        var sum = 0;
+        arr.forEach(function(a){
+            sum += a;
+        })
+        return sum/arr.length;
+    }
 
 });
