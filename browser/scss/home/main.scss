@@ -47,6 +47,13 @@
         cursor: pointer;
       }
     }
+
+    .rest-list {
+      color: #222222;
+      &:hover {
+        background:#f0ad4e;
+      }
+    }
     
     #select-rest {
       width: 100%;
@@ -56,7 +63,7 @@
 body {
   text-align: center;
   margin: 0;
-  background: #6d6d6d;
+  background: #eddfce;
   min-width: 960px;
 }
 
@@ -71,18 +78,34 @@ circle {
 }
 
 #home {
-	font-family: 'Raleway', sans-serif;
-	color: #222222;
+	font-family: 'Quicksand', sans-serif;
+	color: #565656;
   padding-bottom: 40px;
   fullstack-logo {
     padding-top: 30px;
     width: 150px;
     margin: 0 auto;
   }
-  h3 {
+  h2 {
     text-align: center;
+    span {
+      font-weight: bold;
+      color: #337ab7;
+    }
   }
 
+}
+
+#placeholder {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  color: #565656;
+  margin-top: 80px;
+  span {
+    color: #337ab7;
+  }
+  
 }
 
 
