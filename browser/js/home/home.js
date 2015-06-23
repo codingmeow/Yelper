@@ -6,19 +6,10 @@ app.config(function ($stateProvider) {
     });
 });
 
-app.controller('MainController', function ($scope, RestFactory){
+app.controller('MainController', function ($scope, RestFactory, D3Factory){
 	$scope.showing = true;
 	$scope.restaurants = [];
     $scope.selectRestaurant = null;
-
-
-	// var starArr = $scope.selectedRest.stars
-
-
-	// $scope.averageRating = function (starArr) {
-	// 	return eval(starArr.join('+'))/starArr.length;
-	// }
-	// console.log($scope.averageRating());
 
 
     $scope.getAllRestNames = function () {
@@ -33,26 +24,19 @@ app.controller('MainController', function ($scope, RestFactory){
     $scope.getRestaurantByName = function (name) {
         // console.log('this is name', name)
         $scope.showing = false;
+        D3Factory.removeD3();
+        D3Factory.loadD3();
         $scope.restaurants.forEach(function(rest){
             if(name === rest.name){
                 $scope.selectRestaurant = true;
                 $scope.selectedRest = rest;
                 // console.log($scope.selectedRest)
+                
             }
         })
     }
 
-    // $scope.getRestaurant('Dominique Ansel Bakery');
-
-
-    // $scope.getRestaurant = function(rest){
-    //     // console.log('hit directive')
-    //     RestFactory
-    //     .getRest(rest)
-    //     .then(function(main){
-    //         $scope.main = main;
-    //     })
-    // }
+    D3Factory.removeD3();
 
     $scope.inputRest = function (rest){
         console.log('hit directive', rest)
@@ -60,22 +44,5 @@ app.controller('MainController', function ($scope, RestFactory){
             $scope.newRest.url = null;
         })
     }
-
-	// 
-	// console.log($scope.averageRating);
-	// $scope.getAllRestaurants = function () {
-	// 	RestFactory.getAllRest().then(function (rests){
-	// 		$scope.restaurants = rests;
-	// 	});
-	// };
-	// $scope.getAllRestaurants();
-
-		// $scope.showRestByName = function (name) {
-		// 	RestFactory.getRestByName(name).then(function (restaurant){
-		// 		$scope.restaurant = restaurant;
-		// 	});
-		// };
-
-		// $scope.showRestByName();
 
 });

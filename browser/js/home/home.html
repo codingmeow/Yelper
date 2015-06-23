@@ -38,11 +38,11 @@
 
 	<div class='row'>
 		<h3>
-			The keywords generally associated with {{ selectedRest.name }} are: <span ng-repeat='word in selectedRest.keyword'>| {{ word }} |</span>
+			The keywords generally associated with {{ selectedRest.name }} are: <span> {{ selectedRest.keyword[0] }}, {{ selectedRest.keyword[1] }}, and {{ selectedRest.keyword[2] }}</span>
 		</h3>
 	</div>
 
 </div>
 </section>
 
-<rest-stats ng-hide="showing"></rest-stats>
+<div id="body"></div>
