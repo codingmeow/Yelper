@@ -1,12 +1,12 @@
-app.directive('restStats', function ($state, RestFactory){
-	return {
-		restrict: 'E',
-		scope: {
-			restaurant: '='
-		},
-		templateUrl: 'js/common/directives/rest-stats/rest-stats.html',
-		link: function (scope) {
-			console.log('THIS IS RESTAURANT', scope.restaurant);
-		}
-	};
-});
+// app.directive('restStats', function ($rootScope, $state, RestFactory){
+// 	return {
+// 		restrict: 'E',
+// 		scope: {
+// 			selectedRest: '='
+// 		},
+// 		templateUrl: 'js/common/directives/rest-stats/rest-stats.html',
+// 		link: function (scope) {
+// 			console.log('THIS IS RESTAURANT', $rootScope.selectedRest);
+// 		}
+// 	};
+// });

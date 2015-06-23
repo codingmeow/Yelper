@@ -8,43 +8,47 @@ app.directive('navbar', function ($rootScope, $state, RestFactory) {
         templateUrl: 'js/common/directives/navbar/navbar.html',
         link: function (scope) {
 
-            scope.restaurants = [];
+            // scope.restaurants = [];
+            // scope.selectRestaurant = null;
 
-            scope.getAllRestNames = function () {
-                RestFactory.getAllRest().then(function (rests){
-                    scope.restaurants = rests.map(function (rest) {
-                        return rest.name;
-                    })
-                })
-            }
-
-            scope.getRestaurantByURL = function (link) {
-                scope.restaurants.forEach(function (thisRest){
-                    if (thisRest.url ===  link){
-                    console.log('THIS IS LINK', link);
-                    console.log('THIS IS THISREST',thisRest);
-                        scope.restaurant = thisRest;
-                    }
-                })
-            }
-            scope.getAllRestNames();
-
-
-            // scope.getRestaurant = function(rest){
-            //     // console.log('hit directive')
-            //     RestFactory
-            //     .getRest(rest)
-            //     .then(function(main){
-            //         scope.main = main;
+            // scope.getAllRestNames = function () {
+            //     RestFactory.getAllRest().then(function (rests){
+            //         scope.restaurants = rests.map(function (rest) {
+            //             return rest;
+            //         })
             //     })
             // }
 
-            scope.inputRest = function (rest){
-                console.log('hit directive', rest)
-                RestFactory.addRest(rest).then(function (newRest){
-                    scope.newRest.url = null;
-                })
-            }
+            // scope.getRestaurantByName = function (name) {
+            //     // console.log('this is name', name)
+            //     scope.restaurants.forEach(function(rest){
+            //         if(name === rest.name){
+            //             scope.selectRestaurant = true;
+            //             $rootScope.selectedRest = rest;
+            //             console.log($rootScope.selectedRest)
+            //         }
+            //     })
+            // }
+            // scope.getAllRestNames();
+
+            // scope.getRestaurant('Dominique Ansel Bakery');
+
+
+            // // scope.getRestaurant = function(rest){
+            // //     // console.log('hit directive')
+            // //     RestFactory
+            // //     .getRest(rest)
+            // //     .then(function(main){
+            // //         scope.main = main;
+            // //     })
+            // // }
+
+            // scope.inputRest = function (rest){
+            //     console.log('hit directive', rest)
+            //     RestFactory.addRest(rest).then(function (newRest){
+            //         scope.newRest.url = null;
+            //     })
+            // }
 
         }
 
