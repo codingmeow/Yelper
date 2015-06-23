@@ -36,8 +36,6 @@ app.controller('MainController', function ($scope, RestFactory, D3Factory){
         })
     }
 
-    D3Factory.removeD3();
-
     $scope.inputRest = function (rest){
         console.log('hit directive', rest)
         RestFactory.addRest(rest).then(function (newRest){
