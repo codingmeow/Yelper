@@ -30,7 +30,8 @@ app.controller('MainController', function ($scope, RestFactory, D3Factory){
             if(name === rest.name){
                 $scope.selectRestaurant = true;
                 $scope.selectedRest = rest;
-                $scope.rating = Math.round(averagie(rest.stars));
+                $scope.rating = averagie(rest.stars);
+                $scope.negpos = posneg(averagie(rest.stars));
             }
         })
     }
@@ -44,12 +45,17 @@ app.controller('MainController', function ($scope, RestFactory, D3Factory){
         })
     }
 
+    function posneg(num){
+        if(num === 3) return 'NEUTRAL'
+        else if (num > 3) return 'POSITIVE'
+        else return 'NEGATIVE'
+    }
     function averagie(arr){
         var sum = 0;
         arr.forEach(function(a){
             sum += a;
         })
-        return sum/arr.length;
+        return Math.round(sum/arr.length);
     }
 
 });
