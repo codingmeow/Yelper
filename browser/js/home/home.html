@@ -27,12 +27,12 @@
 <section id="home" ng-hide="showing">
     <div class='container' id='rest-stats' >
 	<div class='row'>
-		<h3 ng-model='restaurant.name'>{{ selectedRest.name }} has a <rating ng-model='restaurant.rating' max='5' readonly='true'></rating> rating</h3>
+		<h3 ng-model='restaurant.name'>{{ selectedRest.name }} has a <rating ng-model='rating' max='5' readonly='true'>{{rating}}</rating> rating</h3>
 	</div>
 
 	<div class='row'>
 		<h3>
-			Diners generally have a {{selectedRest.result}} view of {{ selectedRest.name }}
+			Diners generally have a POSITIVE view of {{ selectedRest.name }}
 		</h3>
 	</div>
 
